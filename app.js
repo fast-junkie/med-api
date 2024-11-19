@@ -1,21 +1,14 @@
 import express from 'express';
 import patientRouter from './src/routes/patientRouter.js';
+import { errorHandler } from './src/services/helpersService.js';
 
 const app = express();
+const port = 2112;
 
+app.use(express.json());
 app.use('/patients', patientRouter);
+app.use(errorHandler);
 
-// eslint-disable-next-line no-unused-vars
-app.use((error, req, res, next) => {
-  console.debug('Error Handler: %o', error);
-  const { message } = error;
-  if (message === 'not found') {
-    res.status(404).json({ error: 'No patient found with the provided ID.' });
-  } else {
-    res.status(500).json({ error: 'An internal server error occurred.' });
-  }
-});
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+app.listen(port, () => {
+  console.debug('--med-api: %o', port);
 });

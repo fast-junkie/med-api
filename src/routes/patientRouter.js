@@ -1,5 +1,7 @@
 import express from 'express';
-import { getAllPatients, getPatientById } from '../services/patientService.js';
+import {
+  createPatient, getAllPatients, getPatientById, updatePatient, deletePatient,
+} from '../services/patientService.js';
 
 const router = express.Router();
 
@@ -24,7 +26,33 @@ router.get('/:id', async (req, res, next) => {
 });
 
 // POST /patients
+router.post('/', async (req, res, next) => {
+  try {
+    const patient = await createPatient(req.body);
+    res.status(201).json(patient);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // PUT /patients/:id
+router.put('/:id', async (req, res, next) => {
+  try {
+    const patient = await updatePatient(req.params.id, req.body);
+    res.status(200).json(patient);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // DELETE /patients/:id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    await deletePatient(req.params.id);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default router;
