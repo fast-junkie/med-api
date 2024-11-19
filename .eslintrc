@@ -10,6 +10,7 @@
   },
   "extends": ["airbnb-base"],
   "rules": {
+    "import/extensions": "off",
     "linebreak-style": "off",
     "no-bitwise": "off",
     "no-console": "off",
@@ -18,7 +19,7 @@
     "no-use-before-define": "off",
     "max-len": [
       "error", {
-        "code": 150
+        "code": 120
       }
     ]
   }
